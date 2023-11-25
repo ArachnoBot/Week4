@@ -9,11 +9,16 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/recipe/:food', function(req, res, next) {
-  sendRecipe(res, req.params.food)
+  const food = req.params.food
+  res.send({
+    name: food,
+    instructions: ["instructions1", "instructions2", "instructions3"],
+    ingredients: ["ingredients1", "ingredients2", "ingredients3"]
+  })
 });
 
 router.post("/recipe/", function(req, res, next) {
-  Recipe.create(req.body)
+  recipes.push(req.body)
   res.send(req.body)
 })
 

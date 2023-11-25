@@ -1,7 +1,6 @@
 document.getElementById("add-instruction").addEventListener("click", addInstruction)
 document.getElementById("add-ingredient").addEventListener("click", addIngredient)
 document.getElementById("submit").addEventListener("click", submitRecipe)
-document.getElementById("search").addEventListener("keyup", searchInput)
 
 let recipe = {
     name: "",
@@ -10,14 +9,6 @@ let recipe = {
 }
 
 getRecipe("burnt cookies")
-
-function searchInput() {
-    searchElement = document.getElementById("search")
-    if (event.key == "Enter") {
-        getRecipe(searchElement.value)
-        searchElement.value = ""
-    }
-}
 
 function submitRecipe() {
     recipe.name = document.getElementById("name-text").value
@@ -42,11 +33,6 @@ function submitRecipe() {
         method: "POST",
         body: imgData
     })
-    
-    recipe.name = ""
-    recipe.instructions = []
-    recipe.ingredients = []
-    document.getElementById("name-text").value = ""
 }
 
 function addInstruction() {
@@ -69,16 +55,6 @@ function getRecipe(recipe) {
     fetch("/recipe/" + recipe)
     .then(response => response.json())
     .then(data => {
-        if (data.length == 0) {
-            console.log("no recipe found")
-            return
-        }
-
-        data = data[0]
-
-        insList.innerHTML = ""
-        ingList.innerHTML = ""
-
         nameElem.textContent = data.name
 
         for (ins of data.instructions) {
@@ -94,4 +70,3 @@ function getRecipe(recipe) {
         }
     })
 }
-
